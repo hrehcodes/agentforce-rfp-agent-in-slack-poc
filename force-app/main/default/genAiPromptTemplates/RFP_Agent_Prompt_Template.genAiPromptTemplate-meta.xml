@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPromptTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <activeVersionIdentifier>m8YqWV0mc2VTRrDpuiVbfAuKZWnm2C6KWdzVM9DPZZI=_1</activeVersionIdentifier>
+    <description>Prompt Template that helps to answer RFP questions/sections.</description>
+    <developerName>RFP_Agent_Prompt_Template</developerName>
+    <masterLabel>RFP Agent Prompt Template</masterLabel>
+    <overridable>false</overridable>
+    <templateVersions>
+        <content>###
+INSTRUCTIONS :
+
+Understand the RFP Context
+1.1 Analyze the RFP Objective
+- Review the overarching goal of the RFP.
+- Ensure responses align with the client&apos;s needs.
+1.2 Identify Key Requirements
+- Pinpoint critical requirements and specifications outlined in the RFP.
+- Prioritize response elements based on these requirements.
+Analyze the Query
+2.1 Carefully Read the Question
+- Thoroughly examine the user&apos;s question or issue presented in the QUESTION section.
+2.2 Determine Intent and Scope
+- Ascertain the underlying intent of the question.
+- Define the scope to provide a targeted response.
+Search Knowledge Base
+3.1 Review Provided Knowledge Base
+- Examine the company KNOWLEDGE to locate pertinent information related to the RFP question.
+3.2 Assess Contextual Relevance
+- Ensure retrieved information addresses the question and aligns with the RFP’s specific context.
+Evaluate Information Sufficiency
+4.1 Assess Completeness
+- Determine if the available information sufficiently addresses all aspects of the QUESTION.
+4.2 Identify Gaps
+- Note any missing information required for a comprehensive response.
+Language Instructions
+5.1 Respond in Specified Language
+- Craft the response entirely in {language}.
+- Maintain appropriate terminology and a professional tone.
+Formulate Response
+6.1 Identify Relevant Knowledge Chunks
+6.1.1 Locate Relevant Articles
+- Find the article-chunk(s) most pertinent to the user&apos;s query.
+6.1.2 Extract Source ID
+- Verbally extract the ID of the relevant article to set the &lt;source_id&gt; field in the response JSON.
+- If no relevant article is found, set &lt;source_id&gt; to NONE.
+6.2 Generate Accurate and Comprehensive Response
+6.2.1 Directly Answer the Question
+- Utilize the relevant article-chunk to craft a precise and complete answer.
+6.2.2 Ensure Alignment with RFP Requirements
+- Tailor the response to meet specific requirements and evaluation criteria of the RFP.
+6.2.3 Incorporate Relevant Details
+- Include necessary details such as project methodologies, timelines, deliverables, and compliance information as required by the RFP.
+6.3 Handle Insufficient Knowledge
+6.3.1 Default Response
+- If the request cannot be answered with the provided knowledge, set &lt;source_id&gt; to NONE and &lt;generated_response&gt; to &quot;Sorry, I can&apos;t find an answer based on the available articles.&quot;
+Enhance Response Quality
+7.1 Politeness and Professionalism
+- Maintain a polite and professional tone appropriate for formal RFP submissions.
+7.2 Conciseness and Clarity
+- Present information clearly and concisely, avoiding unnecessary jargon or verbosity.
+7.3 Consistency in Language
+- Ensure consistent language usage, terminology, and style throughout the response.
+Structure Response According to RFP Standards
+8.1 Adhere to RFP Formatting Guidelines
+- Follow any specific formatting or structural guidelines provided in the RFP.
+8.2 Organize Content Logically
+- Present information in a logical sequence, typically following sections such as:
+- Executive Summary
+- Technical Approach
+- Management Plan
+- Pricing
+8.3 Highlight Compliance and Differentiators
+- Clearly indicate how your response meets RFP requirements.
+- Showcase what differentiates your proposal from competitors.
+Refine and Deliver
+9.1 Proofread for Accuracy
+- Review the response for grammatical, typographical, or factual errors.
+9.2 Ensure Completeness
+- Confirm that all parts of the user&apos;s question have been thoroughly addressed.
+9.3 Prepare Final Output
+- Format the response as specified, ensuring readiness for integration into the final RFP submission.
+Review Response
+10.1 Verify Instruction Adherence
+- Ensure all instructions have been meticulously followed.
+10.2 Check Output Format
+- Confirm that the response adheres to the desired output format, including JSON structure with &lt;source_id&gt; and &lt;generated_response&gt; fields.
+10.3 Strict Knowledge Adherence
+- Guarantee that only the provided KNOWLEDGE is utilized to formulate the answer, avoiding any external information.
+
+###
+QUESTION:
+{!$Input:Query}
+
+### 
+KNOWLEDGE:
+{!$EinsteinSearch:sfdc_ai__DynamicRetriever.results}
+
+###
+Response:
+
+</content>
+        <inputs>
+            <apiName>Query</apiName>
+            <definition>primitive://String</definition>
+            <referenceName>Input:Query</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>RetrieverIdOrName</apiName>
+            <definition>primitive://String</definition>
+            <referenceName>Input:RetrieverIdOrName</referenceName>
+            <required>true</required>
+        </inputs>
+        <isCitationEnabled>false</isCitationEnabled>
+        <primaryModel>sfdc_ai__DefaultGPT4Omni</primaryModel>
+        <status>Published</status>
+        <templateDataProviders>
+            <definition>invocable://getEinsteinRetrieverResults/sfdc_ai__DynamicRetriever</definition>
+            <parameters>
+                <definition>primitive://String</definition>
+                <isRequired>true</isRequired>
+                <parameterName>retrieverIdOrName</parameterName>
+                <valueExpression>{!$Input:RetrieverIdOrName}</valueExpression>
+            </parameters>
+            <parameters>
+                <definition>primitive://String</definition>
+                <isRequired>true</isRequired>
+                <parameterName>searchText</parameterName>
+                <valueExpression>{!$Input:Query}</valueExpression>
+            </parameters>
+            <referenceName>EinsteinSearch:sfdc_ai__DynamicRetriever</referenceName>
+        </templateDataProviders>
+        <versionIdentifier>m8YqWV0mc2VTRrDpuiVbfAuKZWnm2C6KWdzVM9DPZZI=_1</versionIdentifier>
+    </templateVersions>
+    <type>einstein_gpt__knowledgeAnswers</type>
+    <visibility>Global</visibility>
+</GenAiPromptTemplate>
