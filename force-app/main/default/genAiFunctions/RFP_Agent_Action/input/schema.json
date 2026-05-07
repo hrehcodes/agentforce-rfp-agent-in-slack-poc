@@ -1,28 +1,31 @@
 {
-  "required" : [ "Input:RetrieverIdOrName", "Input:Query" ],
-  "unevaluatedProperties" : false,
-  "properties" : {
-    "Input:RetrieverIdOrName" : {
-      "title" : "RetrieverIdOrName",
-      "description" : "Please always use this value: \"<YOUR RETRIEVER ID HERE>\"",
-      "lightning:type" : "lightning__textType",
-      "lightning:isPII" : false,
-      "copilotAction:isUserInput" : false
+  "required": [
+    "Input:RetrieverIdOrName",
+    "Input:Query"
+  ],
+  "unevaluatedProperties": false,
+  "properties": {
+    "Input:RetrieverIdOrName": {
+      "title": "RetrieverIdOrName",
+      "description": "Deployment required: replace this hidden input with the target org Data Library retriever ID or API name before activating the action.",
+      "lightning:type": "lightning__textType",
+      "lightning:isPII": false,
+      "copilotAction:isUserInput": false
     },
-    "Input:Query" : {
-      "title" : "Query",
-      "description" : "This is the query or the topic of the RFP to answer.",
-      "lightning:type" : "lightning__textType",
-      "lightning:isPII" : false,
-      "copilotAction:isUserInput" : true
+    "Input:Query": {
+      "title": "Query",
+      "description": "This is the query or the topic of the RFP to answer.",
+      "lightning:type": "lightning__textType",
+      "lightning:isPII": false,
+      "copilotAction:isUserInput": true
     },
-    "citationMode" : {
-      "title" : "Citation Mode",
-      "description" : "Select Citation Mode",
-      "lightning:type" : "lightning__textType",
-      "lightning:isPII" : false,
-      "copilotAction:isUserInput" : false
+    "citationMode": {
+      "title": "Citation Mode",
+      "description": "Select Citation Mode",
+      "lightning:type": "lightning__textType",
+      "lightning:isPII": false,
+      "copilotAction:isUserInput": false
     }
   },
-  "lightning:type" : "lightning__objectType"
+  "lightning:type": "lightning__objectType"
 }

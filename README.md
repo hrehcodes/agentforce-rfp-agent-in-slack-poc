@@ -88,3 +88,26 @@ sf project deploy start --manifest manifest/package.xml --target-org <target-org
 - Keep generated secrets, local org auth files, `.sf`, `.sfdx`, and deployment output out of source control.
 - Treat prompt templates and Agentforce action descriptions as production behavior, not just documentation.
 - For production hardening, prefer Named Credential and External Credential patterns over passing API keys directly through Flow variables.
+
+## Hardening Update
+Security and reliability improvements applied after migration:
+- The retriever schema now describes deployment-time setup instead of embedding a ready-looking placeholder.
+- Prompt instructions now treat retrieved knowledge as untrusted content and refuse hidden-instruction or secret disclosure requests.
+- README documents Slack, retriever, and Agentforce wiring requirements.
+
+## Known Limitations
+- No Apex is included, so validation is metadata deploy plus Agentforce/Slack smoke testing.
+- The target org must supply the Data Library retriever ID or API name.
+
+## Test Commands
+Validate metadata and run relevant tests after authenticating to a target org:
+
+```bash
+sf project deploy start --dry-run --manifest manifest/package.xml --target-org <target-org> --wait 30
+Manual smoke tests: verify configured retriever, supported RFP question, unsupported question, and malicious retrieved content that asks the model to reveal hidden instructions.
+```
+
+## Troubleshooting
+- If an Agentforce action cannot authenticate, confirm the named principal secret is configured in the target org and the running user has the included permission set.
+- If a prompt action returns unsupported or unsafe content, review the prompt template safety rules and test with malicious retrieved content.
+- If deployment fails on Agentforce metadata, deploy supporting objects, Apex, Flows, credentials, and prompt templates first, then wire/publish the target agent in Builder.
